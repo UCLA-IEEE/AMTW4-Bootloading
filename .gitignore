@@ -1,0 +1,7 @@
+*.pyc
+*.swp
+.ninja*
+build.ninja
+*.o
+*.bin
+*.elf
