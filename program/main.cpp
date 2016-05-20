@@ -5,11 +5,11 @@
 #include "driverlib/gpio.h"
 #include "inc/hw_memmap.h"
 
-typedef Pin::DigitalPin<SYSCTL_PERIPH_GPIOF, GPIO_PORTF_BASE, 1> RED_LED;
+typedef Pin::DigitalPin<SYSCTL_PERIPH_GPIOF, GPIO_PORTF_BASE, 3> RED_LED;
 
 int main(void)
 { 
-    SysCtlClockSet(SYSCTL_SYSDIV_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN
+    SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN
                    | SYSCTL_XTAL_16MHZ);
 
     RED_LED::init();
