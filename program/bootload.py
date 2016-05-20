@@ -3,6 +3,7 @@
 import serial
 import time
 import sys
+import os
 
 startAddress = 0x00001000
 blockSize = 1024
@@ -19,18 +20,17 @@ def splitBuf(b, seclen):
 def writeBuf(addr, buf, s):
     writestr = 'S' + ('%08x' % addr) + (''.join([('%02x' % b) for b in buf])) \
                + 'T'
-    print "Writing\n%s" % writestr
+    print "Writing..."
     s.write(writestr)
     s.flush()
 
 def readBuf(s):
     buf = []
 
-    print "Reading"
+    print "Reading..."
 
     while(not len(buf) == (((blockSize + addrSize)*2) + 2)):
         readchar = s.read()
-        sys.stdout.write(readchar)
         buf.append(readchar)
 
     if(not (buf[0] == 's' and buf[-1] == 't')):
@@ -76,10 +76,23 @@ def loadBinfile(f, s):
                 break
 
 if(__name__ == '__main__'):
+    if(not len(sys.argv) == 4):
+        print \
+"""
+USAGE: bootload.py <tty> <baud> <binfile>
+"""
+        exit(1)
+
+    tty = sys.argv[1]
+    baud = int(sys.argv[2])
+    binfile = sys.argv[3]
+
+    if(not os.path.isfile(binfile)):
+        print "%s does not exist!" % binfile
 
     print "Connecting to target..."
 
-    s = serial.Serial("/dev/rfcomm2", 115200)
+    s = serial.Serial(tty, baud)
 
     while(not s.read() == '.'):
         pass
@@ -90,7 +103,7 @@ if(__name__ == '__main__'):
 
     s.flushInput()
 
-    loadBinfile("main.bin", s)
+    loadBinfile(binfile, s)
 
     s.write('q')
     s.close()
