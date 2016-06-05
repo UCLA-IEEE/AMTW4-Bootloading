@@ -7,4 +7,4 @@ There are two linker scripts in this project. The one for the bootloader specifi
 
 To bootload the device, first burn the bootloader with ```./program.sh -p``` from the bootloader root. Then, to bootload the device, run ```program/bootload.py <serial port> <baud rate> <firmware image>```. The ```ninja``` build script for the target program specifies that the ```.elf``` file is ```objcopy```'d to a ```.bin``` file, which can be specified as the ```<firmware image>``` argument to ```bootload.py```. Finally, once ```bootload.py``` has opened the serial port to the target, press the reset button on the target to reboot back into the bootloader and start the upload process. You should see ```bootload.py``` spit out a series of messages about each of the flash regions programmed, followed by ```Done!``` on success.
 
-Enjoy!
+The presentation slides that accompany this code can be viewed [here](https://docs.google.com/presentation/d/1crjUbXfCI6nGW2_OjtM9Pue0B4ehC60-i7EJkvyj6FM/edit?usp=sharing).
